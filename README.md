@@ -1,2 +1,2 @@
-EasySubpageWidget
-=================
+Easy Subpage Widget
+===================
