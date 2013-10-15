@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Easy Subpage Widget
- * Plugin URI: http://www.sennza.com.au
+ * Plugin URI: http://www.sennza.com.au/
  * Description: Displays the parent page as a title and lists child pages.
  * Version: 0.1
- * Author: Sennza
- * Author URI: http://www.sennza.com.au
+ * Author: Sennza Pty Ltd, Bronson Quick, Ryan McCue, Lachlan MacPherson
+ * Author URI: http://www.sennza.com.au/
  */
 
 add_action( 'widgets_init', 'sz_easysubpage_register' );
