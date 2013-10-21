@@ -4,7 +4,7 @@
  * Plugin URI: http://www.sennza.com.au/
  * Description: Displays the parent page as a title and lists sub pages (child pages). If there are no sub pages then
  * don't display anything.
- * Version: 0.1
+ * Version: 1.0
  * Author: Sennza Pty Ltd, Bronson Quick, Ryan McCue, Lachlan MacPherson
  * Author URI: http://www.sennza.com.au/
  */
