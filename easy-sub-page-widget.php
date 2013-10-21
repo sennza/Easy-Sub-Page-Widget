@@ -11,10 +11,10 @@
 add_action( 'widgets_init', 'sz_easysubpage_register' );
 
 function sz_easysubpage_register() {
-	return register_widget( 'Sennza_EasySubpageWidget' );
+	return register_widget( 'Sennza_Easy_Sub_Page_Widget' );
 }
 
-class Sennza_EasySubpageWidget extends WP_Widget {
+class Sennza_Easy_Sub_Page_Widget extends WP_Widget {
 	/**
 	 * Constructor
 	 */
