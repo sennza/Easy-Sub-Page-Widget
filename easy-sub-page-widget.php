@@ -23,25 +23,25 @@ class Sennza_Easy_Sub_Page_Widget extends WP_Widget {
 			'classname' => 'sz-easy-sub-page-widget',
 			'description' => 'Displays the parent page as a title and lists child pages',
 		);
-		$this->WP_Widget('sz-easy-sub-page-widget', 'Easy Sub Page Widget', $widget_ops);
+		$this->WP_Widget( 'sz-easy-sub-page-widget', 'Easy Sub Page Widget', $widget_ops );
 	}
 
 	/**
 	 * Display the option form
 	 */
-	public function form($instance) { }
+	public function form( $instance ) { }
 
 	/**
 	 * Update the widget's options
 	 */
-	public function update($new_instance, $old_instance) { }
+	public function update( $new_instance, $old_instance ) { }
 
 	/**
 	 * Output the widget
 	 */
-	public function widget($args, $instance) {
+	public function widget( $args, $instance ) {
 		global $post;
-		extract($args, EXTR_SKIP);
+		extract( $args, EXTR_SKIP );
 
 		$parent_title = get_the_title( $post->post_parent );
 
@@ -49,7 +49,7 @@ class Sennza_Easy_Sub_Page_Widget extends WP_Widget {
 			'title_li' => '',
 			'echo' => false,
 		);
-		if ($post->post_parent) {
+		if ( $post->post_parent ) {
 			$query['child_of'] = $post->post_parent;
 		}
 		else {
@@ -61,7 +61,7 @@ class Sennza_Easy_Sub_Page_Widget extends WP_Widget {
 ?>
 		<h3><?php echo $parent_title;?></h3>
 
-		<?php if ($children): ?>
+		<?php if ( $children ): ?>
 			<ul>
 				<?php echo $children; ?>
 			</ul>
