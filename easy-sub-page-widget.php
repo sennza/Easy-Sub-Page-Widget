@@ -1,8 +1,9 @@
 <?php
 /**
- * Plugin Name: Easy Subpage Widget
+ * Plugin Name: Easy Sub Page Widget
  * Plugin URI: http://www.sennza.com.au/
- * Description: Displays the parent page as a title and lists child pages.
+ * Description: Displays the parent page as a title and lists sub pages (child pages). If there are no sub pages then
+ * don't display anything.
  * Version: 0.1
  * Author: Sennza Pty Ltd, Bronson Quick, Ryan McCue, Lachlan MacPherson
  * Author URI: http://www.sennza.com.au/
@@ -27,16 +28,6 @@ class Sennza_Easy_Sub_Page_Widget extends WP_Widget {
 	}
 
 	/**
-	 * Display the option form
-	 */
-	public function form( $instance ) { }
-
-	/**
-	 * Update the widget's options
-	 */
-	public function update( $new_instance, $old_instance ) { }
-
-	/**
 	 * Output the widget
 	 */
 	public function widget( $args, $instance ) {
@@ -45,29 +36,35 @@ class Sennza_Easy_Sub_Page_Widget extends WP_Widget {
 
 		$parent_title = get_the_title( $post->post_parent );
 
-		$query = array(
+		$sub_pages_args = array(
 			'title_li' => '',
 			'echo' => false,
 		);
+		// Add a filter for developers. This takes the same args as http://codex.wordpress.org/Function_Reference/wp_list_pages
+		$sub_pages_args = apply_filters( 'sz_sub_pages', $sub_pages_args );
+
 		if ( $post->post_parent ) {
-			$query['child_of'] = $post->post_parent;
+			$sub_pages_args['child_of'] = $post->post_parent;
 		}
 		else {
-			$query['child_of'] = $post->ID;
+			$sub_pages_args['child_of'] = $post->ID;
 		}
-		$children = wp_list_pages( $query );
+		$children = trim( wp_list_pages( $sub_pages_args ) );
 
-		echo $before_widget;
+		// Only show the title and sub pages if there are sub pages for that page
+		if ( ! empty( $children ) ) {
 ?>
-		<h3><?php echo $parent_title;?></h3>
 
-		<?php if ( $children ): ?>
+		<?php echo $before_widget; ?>
+
+			<h3><?php echo $parent_title;?></h3>
 			<ul>
 				<?php echo $children; ?>
 			</ul>
-		<?php endif; ?>
+
+		<?php echo $after_widget; ?>
 
 <?php
-		echo $after_widget;
+		}
 	}
 }
