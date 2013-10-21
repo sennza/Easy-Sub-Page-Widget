@@ -20,10 +20,10 @@ class Sennza_EasySubpageWidget extends WP_Widget {
 	 */
 	public function __construct() {
 		$widget_ops = array(
-			'classname' => 'sz-easysubpage',
+			'classname' => 'sz-easy-sub-page-widget',
 			'description' => 'Displays the parent page as a title and lists child pages',
 		);
-		$this->WP_Widget('sz-easysubpage', 'Easy Subpage Widget', $widget_ops);
+		$this->WP_Widget('sz-easy-sub-page-widget', 'Easy Sub Page Widget', $widget_ops);
 	}
 
 	/**
