@@ -35,6 +35,7 @@ class Sennza_Easy_Sub_Page_Widget extends WP_Widget {
 		extract( $args, EXTR_SKIP );
 
 		$parent_title = get_the_title( $post->post_parent );
+		$parent_link = get_permalink( $post->ID );
 
 		$sub_pages_args = array(
 			'title_li' => '',
@@ -57,7 +58,7 @@ class Sennza_Easy_Sub_Page_Widget extends WP_Widget {
 
 		<?php echo $before_widget; ?>
 
-			<h3><?php echo $parent_title;?></h3>
+			<h3><a href="<?php echo $parent_link; ?>" title="<?php echo $parent_title;?>"><?php echo $parent_title;?></a></h3>
 			<ul>
 				<?php echo $children; ?>
 			</ul>
