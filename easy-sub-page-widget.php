@@ -32,38 +32,40 @@ class Sennza_Easy_Sub_Page_Widget extends WP_Widget {
 	 */
 	public function widget( $args, $instance ) {
 		global $post;
-		extract( $args, EXTR_SKIP );
 
-		$parent_title = get_the_title( $post->post_parent );
-		$parent_link = get_permalink( $post->post_parent );
+		if ( empty( $args['child_of'] ) ) {
+			if ( $post->post_parent ) {
+				$args['child_of'] = $post->post_parent;
+			} else {
+				$args['child_of'] = $post->ID;
+			}
+		}
 
-		$sub_pages_args = array(
+		$parent_title = get_the_title( $args['child_of'] );
+		$parent_link = get_permalink( $args['child_of'] );
+
+		$defaults = array(
 			'title_li' => '',
 			'echo' => false,
 		);
-		// Add a filter for developers. This takes the same args as http://codex.wordpress.org/Function_Reference/wp_list_pages
-		$sub_pages_args = apply_filters( 'sz_sub_pages', $sub_pages_args );
 
-		if ( $post->post_parent ) {
-			$sub_pages_args['child_of'] = $post->post_parent;
-		}
-		else {
-			$sub_pages_args['child_of'] = $post->ID;
-		}
-		$children = trim( wp_list_pages( $sub_pages_args ) );
+		// Add a filter for developers. This takes the same args as http://codex.wordpress.org/Function_Reference/wp_list_pages
+		$args = apply_filters( 'sz_sub_pages', $args );
+
+		$args = wp_parse_args( $args, $defaults );
+
+		extract( $args );
+
+		$children = trim( wp_list_pages( $args ) );
 
 		// Only show the title and sub pages if there are sub pages for that page
 		if ( ! empty( $children ) ) {
 ?>
 
-		<?php echo $before_widget; ?>
-
-			<h3><a href="<?php echo $parent_link; ?>" title="<?php echo $parent_title;?>"><?php echo $parent_title;?></a></h3>
-			<ul>
-				<?php echo $children; ?>
-			</ul>
-
-		<?php echo $after_widget; ?>
+		<h3><a href="<?php echo $parent_link; ?>" title="<?php echo $parent_title;?>"><?php echo $parent_title;?></a></h3>
+		<ul>
+			<?php echo $children; ?>
+		</ul>
 
 <?php
 		}
