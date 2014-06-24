@@ -33,17 +33,6 @@ class Sennza_Easy_Sub_Page_Widget extends WP_Widget {
 	public function widget( $args, $instance ) {
 		global $post;
 
-		if ( empty( $args['child_of'] ) ) {
-			if ( $post->post_parent ) {
-				$args['child_of'] = $post->post_parent;
-			} else {
-				$args['child_of'] = $post->ID;
-			}
-		}
-
-		$parent_title = get_the_title( $args['child_of'] );
-		$parent_link = get_permalink( $args['child_of'] );
-
 		$defaults = array(
 			'title_li' => '',
 			'echo' => false,
@@ -55,6 +44,17 @@ class Sennza_Easy_Sub_Page_Widget extends WP_Widget {
 		$args = wp_parse_args( $args, $defaults );
 
 		extract( $args );
+
+		if ( empty( $args['child_of'] ) ) {
+			if ( $post->post_parent ) {
+				$args['child_of'] = $post->post_parent;
+			} else {
+				$args['child_of'] = $post->ID;
+			}
+		}
+
+		$parent_title = get_the_title( $args['child_of'] );
+		$parent_link = get_permalink( $args['child_of'] );
 
 		$children = trim( wp_list_pages( $args ) );
 
