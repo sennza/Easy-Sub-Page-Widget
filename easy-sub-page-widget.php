@@ -62,7 +62,7 @@ class Sennza_Easy_Sub_Page_Widget extends WP_Widget {
 		if ( ! empty( $children ) ) {
 ?>
 
-		<h3><a href="<?php echo $parent_link; ?>" title="<?php echo $parent_title;?>"><?php echo $parent_title;?></a></h3>
+		<h3 class="widget-title"><a href="<?php echo $parent_link; ?>" title="<?php echo $parent_title;?>"><?php echo $parent_title;?></a></h3>
 		<ul>
 			<?php echo $children; ?>
 		</ul>
