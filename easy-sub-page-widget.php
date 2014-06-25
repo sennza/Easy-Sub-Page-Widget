@@ -24,7 +24,7 @@ class Sennza_Easy_Sub_Page_Widget extends WP_Widget {
 			'classname' => 'sz-easy-sub-page-widget',
 			'description' => 'Displays the parent page as a title and lists child pages',
 		);
-		$this->WP_Widget( 'sz-easy-sub-page-widget', 'Easy Sub Page Widget', $widget_ops );
+		parent::__construct( 'sz-easy-sub-page-widget', __( 'Easy Sub Page Widget' ), $widget_ops );
 	}
 
 	/**
@@ -32,6 +32,8 @@ class Sennza_Easy_Sub_Page_Widget extends WP_Widget {
 	 */
 	public function widget( $args, $instance ) {
 		global $post;
+		
+		extract( $args );
 
 		$defaults = array(
 			'title_li' => '',
@@ -39,27 +41,24 @@ class Sennza_Easy_Sub_Page_Widget extends WP_Widget {
 		);
 
 		// Add a filter for developers. This takes the same args as http://codex.wordpress.org/Function_Reference/wp_list_pages
-		$args = apply_filters( 'sz_sub_pages', $args );
+		$sub_page_args = apply_filters( 'sz_sub_pages', $defaults );
 
-		$args = wp_parse_args( $args, $defaults );
-
-		extract( $args );
-
-		if ( empty( $args['child_of'] ) ) {
+		if ( empty( $sub_page_args['child_of'] ) ) {
 			if ( $post->post_parent ) {
-				$args['child_of'] = $post->post_parent;
+				$sub_page_args['child_of'] = $post->post_parent;
 			} else {
-				$args['child_of'] = $post->ID;
+				$sub_page_args['child_of'] = $post->ID;
 			}
 		}
 
-		$parent_title = get_the_title( $args['child_of'] );
-		$parent_link = get_permalink( $args['child_of'] );
+		$parent_title = get_the_title( $sub_page_args['child_of'] );
+		$parent_link = get_permalink( $sub_page_args['child_of'] );
 
-		$children = trim( wp_list_pages( $args ) );
+		$children = trim( wp_list_pages( $sub_page_args ) );
 
 		// Only show the title and sub pages if there are sub pages for that page
 		if ( ! empty( $children ) ) {
+			echo $args['before_widget']
 ?>
 
 		<h3 class="widget-title"><a href="<?php echo $parent_link; ?>" title="<?php echo $parent_title;?>"><?php echo $parent_title;?></a></h3>
@@ -68,6 +67,7 @@ class Sennza_Easy_Sub_Page_Widget extends WP_Widget {
 		</ul>
 
 <?php
+			echo $args['after_widget'];
 		}
 	}
 }
