@@ -80,9 +80,10 @@ class Sennza_Easy_Sub_Page_Widget extends WP_Widget {
 				<?php echo $children; ?>
 			</ul>
 
-			<?php
-			echo $args['after_widget'];
-		}
+		<?php }
+
+		echo $args['after_widget'];
+
 	}
 
 	public function form( $instance ) {
